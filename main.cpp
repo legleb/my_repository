@@ -13,7 +13,10 @@ int main()
   std::cin >> c >> b;
   u_t count = 0;
   while (std::cin >> a) {
-    count += isPyth(a, b, c);
+    if (checkOverflow(a, b, c)) {
+      std::cerr << "Error\n";
+      return 2;
+    } count += isPyth(a, b, c);
     c = b;
     b = a;
   }
