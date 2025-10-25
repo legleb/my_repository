@@ -1,13 +1,17 @@
 #include <iostream>
+#include <climits>
 
 bool isPyth(unsigned a, unsigned b, unsigned c);
+bool checkOverflow(unsigned a, unsigned b, unsigned c);
+
+const unsigned MAX = std::numeric_limits<unsigned>::max();
 
 int main()
 {
   using u_t = unsigned;
-  size_t a = 0, b = 0, c = 0;
+  u_t a = 0, b = 0, c = 0;
   std::cin >> c >> b;
-  size_t count = 0;
+  u_t count = 0;
   while (std::cin >> a) {
     count += isPyth(a, b, c);
     c = b;
@@ -28,4 +32,19 @@ bool isPyth(unsigned a, unsigned b, unsigned c)
   p = p || (b * b == (a * a + c * c));
   p = p || (c * c == (a * a + b * b));
   return p;
+}
+
+bool checkOverflow(unsigned a, unsigned b, unsigned c)
+{
+  bool p = (a > MAX / a);
+  p = p || (b > MAX / b);
+  p = p || (c > MAX / c);
+  if (p == true) {
+    return p;
+  } else {
+    unsigned a2 = a * a, b2 = b * b, c2 = c * c;
+    p = (a2 > MAX - b2);
+    p = p || (a2 > MAX - c2);
+    p = p || (b2 > MAX - c2);
+    return p;
 }
